@@ -9,5 +9,7 @@ public class RelogiosApp
 		relogios[0] = new RelogioDigital();
 		relogios[1] = new RelogioAnalogico();
 		Alarme alarme = new Alarme(relogios);
+        Thread rodaAlarme = new Thread(alarme);
+        rodaAlarme.start();
 	}
 }

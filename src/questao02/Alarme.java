@@ -2,7 +2,7 @@ package questao02;
 
 import java.util.GregorianCalendar;
 
-public class Alarme 
+public class Alarme implements Runnable
 {
 	private static final int INTERVALO = 100;
 	private int hora;
@@ -39,5 +39,27 @@ public class Alarme
 	{	for (Relogio relogio: relogios) 
 		{	relogio.horaMudou(novaHora);	
 		}
+	}
+
+	@Override
+	public void run() {
+	    while (true) {
+            if (this.primeiraVez){
+                System.out.println("Horario alterado pela primeira vez.");
+                this.primeiraVez = false;
+            }
+	        else if (this.hora != getHoraAtual() || this.minuto != getMinutoAtual()) {
+                this.hora = getHoraAtual();
+                this.minuto = getMinutoAtual();
+                disparaMinutoMudou(minuto);
+                disparaHoraMudou(hora);
+                System.out.println("Horario alterado.");
+            }
+            try {
+                Thread.sleep(INTERVALO);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 	}
 }
