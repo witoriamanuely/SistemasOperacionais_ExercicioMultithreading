@@ -93,7 +93,7 @@ public class Notepad extends JFrame implements ActionListener, Runnable{
                try {
                    Thread.sleep(60000);
                    salvarArquivo();
-				   System.out.println("Salvo.");
+                   System.out.println("Salvo.");
                } catch (InterruptedException e) {
                    e.printStackTrace();
                }
