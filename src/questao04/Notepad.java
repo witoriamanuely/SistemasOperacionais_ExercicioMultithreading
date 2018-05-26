@@ -6,8 +6,7 @@ import java.awt.event.*;
 import java.util.Scanner;
 import java.io.*;
  
-public class Notepad extends JFrame implements ActionListener
-{	
+public class Notepad extends JFrame implements ActionListener, Runnable{
 	private static final long serialVersionUID = 1L;
 	private static final long UM_MINUTO = 60000;
 	private TextArea textArea = new TextArea("", 0,0, TextArea.SCROLLBARS_VERTICAL_ONLY);
@@ -16,6 +15,7 @@ public class Notepad extends JFrame implements ActionListener
 	private MenuItem openFile = new MenuItem();  
 	private MenuItem saveFile = new MenuItem(); 
 	private File arquivo = null;
+
 	
 	public Notepad() 
 	{	this.setSize(500, 300); 
@@ -83,11 +83,36 @@ public class Notepad extends JFrame implements ActionListener
 		{	System.out.println(ex.getMessage());
 		}
 	}
-	
-   
-	public static void main(String args[]) 
-	{	Notepad app = new Notepad();
-        app.setVisible(true);
+
+
+	@Override
+	public void run() {
+       while (true){
+
+           if (this.arquivo != null){
+               try {
+                   Thread.sleep(60000);
+                   salvarArquivo();
+				   System.out.println("Salvo.");
+               } catch (InterruptedException e) {
+                   e.printStackTrace();
+               }
+
+
+           }
+
+
+       }
+
+
 	}
+	public static void main(String args[]) 
+	{
+        Notepad app = new Notepad();
+        app.setVisible(true);
+        Thread rodaApp = new Thread(app);
+        rodaApp.start();
+	}
+
 }
  
