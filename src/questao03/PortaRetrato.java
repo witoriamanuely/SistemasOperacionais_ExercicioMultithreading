@@ -2,7 +2,7 @@ package questao03;
 
 import java.io.File;
 
-public class PortaRetrato
+public class PortaRetrato implements Runnable
 {
 	private File diretorio;
 	private FrameImagem frameImagem;
@@ -16,5 +16,17 @@ public class PortaRetrato
 	
 	private File[] getArquivosImagens() 
 	{	return diretorio.listFiles(new ImageFileFilter());
+	}
+
+	@Override
+	public void run() {
+		for(File imagem : getArquivosImagens()) {
+			this.frameImagem.setImagem(imagem);
+			try {
+				Thread.sleep(tempo);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

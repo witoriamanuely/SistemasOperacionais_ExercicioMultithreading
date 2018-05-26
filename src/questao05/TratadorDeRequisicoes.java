@@ -7,8 +7,9 @@ import java.net.Socket;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
-public class TratadorDeRequisicoes 
+public class TratadorDeRequisicoes implements Runnable
 {
 	private static final DateFormat FORMATADOR_DATA = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
 	private Socket soquete;
@@ -33,6 +34,20 @@ public class TratadorDeRequisicoes
 		saida.write("<h1>Hora atual</h1>".getBytes());
 		saida.write(("<h2>" + FORMATADOR_DATA.format(new Date()) + "</h2>").getBytes());
 		saida.write("</ul></body></html>".getBytes());
+		try {
+			TimeUnit.MILLISECONDS.sleep(300);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		soquete.close();
+	}
+
+	@Override
+	public void run() {
+		try {
+			escreverSaida();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
